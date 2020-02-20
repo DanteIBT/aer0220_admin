@@ -1,0 +1,62 @@
+<!-- Page Content-->
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body new-user order-list">
+                        <h4 class="header-title mt-0 mb-3">LISTADO DE ALUMNOS</h4>
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th class="border-top-0">REFERENCIA</th>
+                                        <th class="border-top-0">NOMBRE</th>
+                                        <th class="border-top-0">APELLIDO PATERNO</th>
+                                        <th class="border-top-0">APELLIDO MATERNO</th>
+                                        <th class="border-top-0">EDAD</th>
+                                        <th class="border-top-0">NIVEL</th>
+                                        <th class="border-top-0">ESTATUS</th>
+                                        <th class="border-top-0">DETALLES</th>
+                                    </tr>
+                                    <!--end tr-->
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let student of studentsList">
+                                        <td>
+                                            8888
+                                        </td>
+                                        <td>
+                                            {{student.name}}
+                                        </td>
+                                        <td> {{student.name_paternal}} </td>
+                                        <td> {{student.name_maternal}} </td>
+                                        <td> {{student.birth_date}} AÑOS</td>
+                                        <td> {{student.student_courses.level}} </td>
+                                        <td>
+                                            <span class="badge badge-boxed  badge-soft-success">PAGADO</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-info px-4 align-self-center report-btn" (click)="profileStudent( student )">PERFIL</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--end /div-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+    </div>
+    <!-- container -->
+
+    <footer class="footer text-center text-sm-left">
+        &copy; 2020 AEROBOT PLANET <span class="text-muted d-none d-sm-inline-block float-right">ATOMBITS</span>
+    </footer>
+</div>
+<!-- end page content -->

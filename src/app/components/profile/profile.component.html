@@ -1,0 +1,122 @@
+<!-- Page Content-->
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body border-bottom">
+                        <div class="fro_profile">
+                            <div class="row">
+                                <div class="col-lg-4 mb-3 mb-lg-0">
+                                    <div class="fro_profile-main">
+                                        <div class="fro_profile-main-pic">
+                                            <img src="assets/images/users/user-4.jpg" alt="" class="rounded-circle">
+                                            <span class="fro-profile_main-pic-change">
+                                                    <i class="fas fa-camera"></i>
+                                                </span>
+                                        </div>
+                                        <div class="fro_profile_user-detail">
+                                            <h5 class="fro_user-name">{{profile.name}}</h5>
+                                            <p class="mb-0 fro_user-name-post">{{profile.origin_school}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+
+                                <div class="col-lg-4 mb-3 mb-lg-0">
+                                    <div class="header-title">DATOS GENERALES</div>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="seling-report">
+                                                <ul class="list-inline mb-0">
+                                                    <li class="mb-2 list-inline-item text-muted font-13"><i class="mdi mdi-label text-success mr-2"></i>CURP:<br> {{profile.curp}} </li>
+                                                    <li class="mb-2 list-inline-item text-muted font-13"><i class="mdi mdi-label text-success mr-2"></i>NACIMIENTO:<br> {{profile.birth_date}} </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                                <div class="col-lg-4 mb-2 mb-lg-0">
+                                    <div class="header-title">PADRE O TUTOR</div>
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="seling-report">
+                                                <ul class="list-inline mb-0">
+                                                    <li class="mb-2 list-inline-item text-muted font-13"><i class="mdi mdi-label text-success mr-2"></i>NOMBRE:<br> {{profile.father_name}} </li>
+                                                    <li class="mb-2 list-inline-item text-muted font-13"><i class="mdi mdi-label text-success mr-2"></i>PARENTESCO:<br> {{profile.student_relationship.name}} </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end col-->
+                            </div>
+                            <!--end row-->
+                        </div>
+                        <!--end f_profile-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mt-0 header-title mb-3">CONTACTO</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class=""><i class="mdi mdi-phone mr-2 text-success font-18"></i> <b> WHATSAPP </b> : {{profile.whatsapp}} </li>
+                            <li class="mt-2"><i class="mdi mdi-email-outline text-success font-18 mt-2 mr-2"></i> <b> Email </b> : {{profile.email}} </li>
+                            <li class="mt-2"><i class="mdi mdi-map-marker text-success font-18 mt-2 mr-2"></i> <b>CIUDAD</b> : {{profile.student_city.name}} </li>
+                        </ul>
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div>
+            <!--end col-->
+
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="tab-content" id="profile-tabContent">
+                            <div class="tab-pane fade show active" id="profile-dash">
+                                <h4 class="header-title mt-0">RESUMEN DE ALUMNO</h4>
+                                Alergias: {{profile.allergies}}
+                                <div class="chart-demo dash-apex-chart m-0">
+                                    <div id="d2_overview" class="apex-charts"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                    </div>
+                                    <!--end col-->
+                                </div>
+                                <!--end row-->
+                            </div>
+                            <!--end tab-pane-->
+
+
+                        </div>
+                        <!--end tab-content-->
+                    </div>
+                    <!--end card-body-->
+                </div>
+                <!--end card-->
+            </div>
+            <!--end col-->
+        </div>
+        <!--end row-->
+
+    </div>
+    <!-- container -->
+
+    <footer class="footer text-center text-sm-left">
+        &copy; 2020 AEROBOT PLANET <span class="text-muted d-none d-sm-inline-block float-right">ATOMBITS</span>
+    </footer>
+</div>
+<!-- end page content -->
