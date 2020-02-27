@@ -11,7 +11,6 @@ export class Aer0220ApiService {
   userToken: string;
 
   constructor(private http: HttpClient) {
-    console.log('Aer0220ApiService Listo!!');
     this.reedToken();
   }
 
@@ -22,7 +21,7 @@ export class Aer0220ApiService {
       Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE2NDA5NjUsImV4cCI6MTU4MjkzNjk2NSwic3ViIjpudWxsfQ.hOG_Dh1vso3YWPaNpq8vmasZnu-LJuIbrvIWedXz910'
     });
 
-    return this.http.get( url, { headers } );
+    return this.http.get( url, { headers } ).toPromise();
 
   }
 
@@ -38,6 +37,46 @@ export class Aer0220ApiService {
 
   }
 
+  getCount() {// Total students enrolled
+
+    return this.getQuery(`count/students`);
+
+  }
+
+  getStudentsCourses( id: any ) {// Total students in course
+
+    return this.getQuery(`count/courses/${ id }`);
+
+  }
+  getTotalAmount() {// Total amount
+
+    return this.getQuery(`count/amount`);
+
+  }
+  getAmountCourses( id: any ) {// Total amount per course
+
+    return this.getQuery(`count/amount/${ id }`);
+
+  }
+  getAverageCourses( id: any ) {// Average of age
+
+    return this.getQuery(`count/age/${ id }`);
+
+  }
+
+  getLastRegistration( id: any ) {// Average of age
+
+    return this.getQuery(`count/registration/${ id }`);
+
+  }
+
+  getCourses() { // List of courses
+
+    return this.http.get('http://localhost/aer0220_api/catalogues/courses').toPromise();
+
+  }
+
+
   getLogin(email: string, password: string) {
 
     return this.http.post('http://localhost/aer0220_api/sign-in', { email, password })
@@ -45,7 +84,7 @@ export class Aer0220ApiService {
         this.saveToken(data['access_token']);
         return data;
       })
-    );
+    ).toPromise();
 
   }
 
@@ -54,6 +93,7 @@ export class Aer0220ApiService {
     this.userToken = idToken;
     localStorage.setItem('token', idToken);
 
+    // Valid expiration date
     const today = new Date();
     today.setSeconds(1296000);
 
@@ -81,7 +121,6 @@ export class Aer0220ApiService {
   }
 
   getCurrentUser() {
-    let userString = localStorage.getItem('currentUser');
 
   }
 
@@ -91,7 +130,7 @@ export class Aer0220ApiService {
 
   }
 
-  isLogIn(): boolean {
+  isLogIn(): boolean { // Check the session
 
     if (this.userToken.length < 2) {
       return false;
@@ -101,6 +140,7 @@ export class Aer0220ApiService {
     const expiresDate = new Date();
     expiresDate.setTime(expires);
 
+    // Valid expiration date
     if (expiresDate > new Date() ) {
       return true;
     } else {
@@ -109,13 +149,5 @@ export class Aer0220ApiService {
 
   }
 
-  // Total de estudiantes inscritos
-  // monto total de las inscripciones
-  // calcular edad de todos los estudiantes inscritos en un curso / primediar
-  // qué es referencia en la lista de alunnos
-  // cambiar status de no pagado / pagado
-  // cambiar father_name por tutor_name
-  // fotografía en la tabla estudiante / users / y para las medallas (courses)
-  // hacer el footer component
-  // catálogo de status para los cursos
+
 }

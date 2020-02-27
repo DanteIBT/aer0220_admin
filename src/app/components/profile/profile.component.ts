@@ -24,8 +24,7 @@ export class ProfileComponent {
   getStudent( id: string ){
 
     this.aer0220.getStudent( id )
-    .subscribe ( data => {
-      console.log(data);
+    .then ( data => {
       this.profile = data;
     });
 

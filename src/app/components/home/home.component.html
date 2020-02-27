@@ -9,7 +9,7 @@
                             <div class="col-8 align-self-center">
                                 <div class="">
                                     <h4 class="mt-0 header-title">TOTAL INSCRITOS</h4>
-                                    <h2 class="mt-0 font-weight-bold text-dark">888</h2>
+                                    <h2 class="mt-0 font-weight-bold text-dark">{{getCount}}</h2>
                                     <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO ANTERIOR</p>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="col-8 align-self-center">
                                 <div class="">
                                     <h4 class="mt-0 header-title">TOTAL INSCRIPCIONES</h4>
-                                    <h2 class="mt-0 font-weight-bold text-dark">$8,888.88</h2>
+                                    <h2 class="mt-0 font-weight-bold text-dark">{{getTotalAmount}}</h2>
                                     <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO ANTERIOR</p>
                                 </div>
                             </div>
@@ -150,105 +150,21 @@
                                         <th class="border-top-0">TOTAL ($)</th>
                                         <th class="border-top-0">ESTATUS</th>
                                     </tr>
-                                    <!--end tr-->
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngFor="let course of getCourses;let i = index">
                                         <td>
                                             <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>
-                                            Byte (B)
-                                        </td>
-                                        <td>
-                                            88
-                                        </td>
-                                        <td>08/08/2020 08:08:08</td>
-                                        <td>8 AÑOS</td>
-                                        <td>$8,888.88</td>
+                                        <td>{{ i+1 }} - {{ course.level }}</td>
+                                        <td>{{ getStudentsCourses[i]}}</td>
+                                        <td>{{ getLastRegistration[i]?.updated_at }}</td>
+                                        <td>{{ getAverageCourses[i]}} AÑOS</td>
+                                        <td>${{ getAmountCourses[i] }}</td>
                                         <td>
                                             <span class="badge badge-boxed  badge-soft-success">SUPERADO</span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>
-                                            KiloByte (KB)
-                                        </td>
-                                        <td>
-                                            88
-                                        </td>
-                                        <td>08/08/2020 08:08:08</td>
-                                        <td>8 AÑOS</td>
-                                        <td>$8,888.88</td>
-                                        <td>
-                                            <span class="badge badge-boxed  badge-soft-success">SUPERADO</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>
-                                            MegaByte (MB)
-                                        </td>
-                                        <td>
-                                            88
-                                        </td>
-                                        <td>08/08/2020 08:08:08</td>
-                                        <td>8 AÑOS</td>
-                                        <td>$8,888.88</td>
-                                        <td>
-                                            <span class="badge badge-boxed  badge-soft-warning">ACEPTABLE</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>
-                                            GigaByte (GB)
-                                        </td>
-                                        <td>
-                                            88
-                                        </td>
-                                        <td>08/08/2020 08:08:08</td>
-                                        <td>8 AÑOS</td>
-                                        <td>$8,888.88</td>
-                                        <td>
-                                            <span class="badge badge-boxed  badge-soft-warning">ACEPTABLE</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>
-                                            TeraByte (TB)
-                                        </td>
-                                        <td>
-                                            88
-                                        </td>
-                                        <td>08/08/2020 08:08:08</td>
-                                        <td>8 AÑOS</td>
-                                        <td>$8,888.88</td>
-                                        <td>
-                                            <span class="badge badge-boxed  badge-soft-danger">REZAGADO</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>
-                                            Master (M)
-                                        </td>
-                                        <td>
-                                            88
-                                        </td>
-                                        <td>08/08/2020 08:08:08</td>
-                                        <td>8 AÑOS</td>
-                                        <td>$8,888.88</td>
-                                        <td>
-                                            <span class="badge badge-boxed  badge-soft-danger">REZAGADO</span>
-                                        </td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>

@@ -14,7 +14,7 @@ export class ListComponent {
   constructor(private aer0220: Aer0220ApiService, private router: Router) {
 
     this.aer0220.getStudents()
-    .subscribe ( ( data: any ) => {
+    .then ( ( data: any ) => {
       console.log(data);
       this.studentsList = data;
     });
@@ -27,8 +27,6 @@ export class ListComponent {
     let studentId;
 
     studentId = student.student_id;
-
-    console.log(studentId);
 
     this.router.navigate([ '/profile', studentId ]);
 

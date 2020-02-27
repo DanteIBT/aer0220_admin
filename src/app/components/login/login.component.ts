@@ -21,8 +21,7 @@ export class LoginComponent {
     console.log(this.user);
 
     this.aer0220.getLogin(this.user.email, this.user.password)
-    .subscribe ( ( data: any ) => {
-      console.log(data);
+    .then ( ( data: any ) => {
       this.router.navigateByUrl('/home');
     }, (err) => {
       console.log(err);
