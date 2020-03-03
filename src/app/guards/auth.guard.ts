@@ -11,7 +11,6 @@ export class AuthGuard implements CanActivate {
   constructor(private aer0220: Aer0220ApiService, private router: Router) { }
 
   canActivate(): boolean {
-    console.log('Guard');
     if (this.aer0220.isLogIn()) {
       return true;
     } else {

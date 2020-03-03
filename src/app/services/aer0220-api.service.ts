@@ -9,29 +9,39 @@ import { map } from 'rxjs/operators';
 export class Aer0220ApiService {
 
   userToken: string;
+  userName: string;
 
   constructor(private http: HttpClient) {
     this.reedToken();
+    this.reedUserName();
   }
+
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: localStorage.getItem('token')
+  });
 
   getQuery( query: string) {
     const url = `http://localhost/aer0220_api/${ query }`;
 
-    const headers = new HttpHeaders({
-      Authorization: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE2NDA5NjUsImV4cCI6MTU4MjkzNjk2NSwic3ViIjpudWxsfQ.hOG_Dh1vso3YWPaNpq8vmasZnu-LJuIbrvIWedXz910'
-    });
-
-    return this.http.get( url, { headers } ).toPromise();
+    return this.http.get( url, { headers: this.headers } ).toPromise();
 
   }
 
-  getStudents() {
+  putQuery( query: string) {
+    const url = `http://localhost/aer0220_api/${ query }`;
 
-    return this.getQuery('students'); // .pipe( map( data => data ));
+    return this.http.put( url, {withCredentials: true}, { headers: this.headers } ).toPromise();
 
   }
 
-  getStudent( id: string ) {
+  getStudents() {  // All students
+
+    return this.getQuery('students/');
+
+  }
+
+  getStudent( id: string ) { // One student
 
     return this.getQuery(`students/${ id }`);
 
@@ -39,34 +49,34 @@ export class Aer0220ApiService {
 
   getCount() {// Total students enrolled
 
-    return this.getQuery(`count/students`);
+    return this.getQuery(`students/count/`);
 
   }
 
   getStudentsCourses( id: any ) {// Total students in course
 
-    return this.getQuery(`count/courses/${ id }`);
+    return this.getQuery(`students/courses/${ id }`);
 
   }
   getTotalAmount() {// Total amount
 
-    return this.getQuery(`count/amount`);
+    return this.getQuery(`payments/amount/`);
 
   }
   getAmountCourses( id: any ) {// Total amount per course
 
-    return this.getQuery(`count/amount/${ id }`);
+    return this.getQuery(`students/amount/${ id }`);
 
   }
   getAverageCourses( id: any ) {// Average of age
 
-    return this.getQuery(`count/age/${ id }`);
+    return this.getQuery(`students/age/${ id }`);
 
   }
 
-  getLastRegistration( id: any ) {// Average of age
+  getLastRegistration( id: any ) {// Las Registration
 
-    return this.getQuery(`count/registration/${ id }`);
+    return this.getQuery(`students/registration/${ id }`);
 
   }
 
@@ -76,15 +86,31 @@ export class Aer0220ApiService {
 
   }
 
+  putPayment(studentID: any) {
+
+    return this.putQuery(`payments/${ studentID }`);
+
+    // return this.http.put(`http://localhost/aer0220_api/payments/${ studentID }`, {withCredentials: true}, { headers: this.headers } ).toPromise();
+
+  }
 
   getLogin(email: string, password: string) {
 
     return this.http.post('http://localhost/aer0220_api/sign-in', { email, password })
       .pipe( map( data => {
         this.saveToken(data['access_token']);
+        this.saveUserName(data.user.name);
+
         return data;
       })
     ).toPromise();
+
+  }
+
+  private saveUserName( userName: string ) {
+
+    this.userName = userName;
+    localStorage.setItem('name', userName);
 
   }
 
@@ -95,7 +121,7 @@ export class Aer0220ApiService {
 
     // Valid expiration date
     const today = new Date();
-    today.setSeconds(1296000);
+    today.setSeconds(1296000); // 15 days
 
     localStorage.setItem('expires', today.getTime().toString() );
 
@@ -113,20 +139,22 @@ export class Aer0220ApiService {
 
   }
 
-  setUser(user) {
+  reedUserName() {
 
-    const userString = JSON.stringify(user);
-    localStorage.setItem('currentUser', userString);
+    if (localStorage.getItem('name')) {
+      this.userName = localStorage.getItem('name');
+    } else {
+      this.userName = '';
+    }
 
-  }
-
-  getCurrentUser() {
+    return this.userToken;
 
   }
 
   logOut() {
 
     localStorage.removeItem('token');
+    localStorage.removeItem('name');
 
   }
 

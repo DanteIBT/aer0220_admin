@@ -13,12 +13,12 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { WrapperComponent } from './components/shared/wrapper/wrapper.component';
 import { WrapperImgComponent } from './components/shared/wrapper-img/wrapper-img.component';
+import { LoginComponent } from './components/login/login.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
+import { ComponentsComponent } from './components/components.component';
 
 // Routes
 import { ROUTES } from './app.routes';
-import { FormComponent } from './components/form/form.component';
-import { LoginComponent } from './components/login/login.component';
-
 
 
 @NgModule({
@@ -30,8 +30,9 @@ import { LoginComponent } from './components/login/login.component';
     HomeComponent,
     WrapperComponent,
     WrapperImgComponent,
-    FormComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent,
+    ComponentsComponent
   ],
   imports: [
     BrowserModule,

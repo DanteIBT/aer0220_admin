@@ -18,7 +18,6 @@ export class LoginComponent {
 
 
   public onLogin() {
-    console.log(this.user);
 
     this.aer0220.getLogin(this.user.email, this.user.password)
     .then ( ( data: any ) => {

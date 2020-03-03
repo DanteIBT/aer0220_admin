@@ -46,7 +46,7 @@
                             <div class="col-8 align-self-center">
                                 <div class="">
                                     <h4 class="mt-0 header-title">TOTAL INSCRIPCIONES</h4>
-                                    <h2 class="mt-0 font-weight-bold text-dark">{{getTotalAmount}}</h2>
+                                    <h2 class="mt-0 font-weight-bold text-dark">$ {{getTotalAmount}}</h2>
                                     <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO ANTERIOR</p>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                                 <div class="icon-info my-3">
                                                     <i class="dripicons-user bg-soft-pink"></i>
                                                 </div>
-                                                <h2 class="mt-0 font-weight-bold text-dark">88</h2>
+                                                <h2 class="mt-0 font-weight-bold text-dark">{{getStudentsNew}}</h2>
                                                 <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO PASADO</p>
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
                                                 <div class="icon-info my-3">
                                                     <i class="dripicons-user bg-soft-info"></i>
                                                 </div>
-                                                <h2 class="mt-0 font-weight-bold text-dark">88</h2>
+                                                <h2 class="mt-0 font-weight-bold text-dark">{{studentsRecurrent}}</h2>
                                                 <p class="mb-1 text-muted"><span class="text-danger"><i class="mdi mdi-arrow-down"></i>8.8%</span> VS AÑO PASADO</p>
                                             </div>
                                         </div>
@@ -161,7 +161,9 @@
                                         <td>{{ getAverageCourses[i]}} AÑOS</td>
                                         <td>${{ getAmountCourses[i] }}</td>
                                         <td>
-                                            <span class="badge badge-boxed  badge-soft-success">SUPERADO</span>
+                                            <span *ngIf="conditionStatus" [className]="myClass ? 'badge badge-boxed  badge-soft-success': 'badge badge-boxed  badge-soft-warning' ">
+                                                {{ getStatusCourses[i] }}
+                                            </span>
                                         </td>
                                     </tr>
 
@@ -179,9 +181,5 @@
         <!--end row-->
     </div>
     <!-- container -->
-
-    <footer class="footer text-center text-sm-left">
-        &copy; 2020 AEROBOT PLANET <span class="text-muted d-none d-sm-inline-block float-right">ATOMBITS</span>
-    </footer>
 </div>
 <!-- end page content -->

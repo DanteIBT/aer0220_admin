@@ -22,9 +22,9 @@
                                     <!--end tr-->
                                 </thead>
                                 <tbody *ngIf="studentsList">
-                                    <tr *ngFor="let student of studentsList">
+                                    <tr *ngFor="let student of studentsList;let i = index">
                                         <td>
-                                            8888
+                                            {{student.reference}}
                                         </td>
                                         <td>
                                             {{student.name}}
@@ -34,7 +34,7 @@
                                         <td> {{student.birth_date}} AÑOS</td>
                                         <td> {{student.student_courses.level}} </td>
                                         <td>
-                                            <span class="badge badge-boxed  badge-soft-success">PAGADO</span>
+                                            <button *ngIf="conditionStatus" [className]="myClass ? 'btn btn-info': 'btn btn-danger' " (click)="payment( student.student_id )">{{student.student_id}}</button>
                                         </td>
                                         <td>
                                             <button class="btn btn-info px-4 align-self-center report-btn" (click)="profileStudent( student )">PERFIL</button>
@@ -54,9 +54,5 @@
         <!--end row-->
     </div>
     <!-- container -->
-
-    <footer class="footer text-center text-sm-left">
-        &copy; 2020 AEROBOT PLANET <span class="text-muted d-none d-sm-inline-block float-right">ATOMBITS</span>
-    </footer>
 </div>
 <!-- end page content -->

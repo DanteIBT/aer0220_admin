@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WrapperImgComponent implements OnInit {
 
-  constructor() { }
+
+  userName = localStorage.getItem('name');
+
+  constructor() {}
 
   ngOnInit() {
   }

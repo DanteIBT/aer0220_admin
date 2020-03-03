@@ -87,10 +87,12 @@
                         <div class="tab-content" id="profile-tabContent">
                             <div class="tab-pane fade show active" id="profile-dash">
                                 <h4 class="header-title mt-0">RESUMEN DE ALUMNO</h4>
-                                Alergias: {{profile.allergies}}
-                                <div class="chart-demo dash-apex-chart m-0">
-                                    <div id="d2_overview" class="apex-charts"></div>
-                                </div>
+                                <p>Referencia: {{profile.reference}}</p>
+                                <p>Género: {{profile.student_gender?.name}}</p>
+                                <p>Grado: {{profile.student_grade?.name}}</p>
+                                <p>Nivel actual: {{profile.student_courses?.level}}</p>
+                                <p>Cómo nos conociste: {{profile.student_meet_us?.name}}</p>
+                                <p>Alergias: {{profile.allergies}}</p>
                                 <div class="row">
                                     <div class="col-lg-6">
                                     </div>
@@ -114,9 +116,5 @@
 
     </div>
     <!-- container -->
-
-    <footer class="footer text-center text-sm-left">
-        &copy; 2020 AEROBOT PLANET <span class="text-muted d-none d-sm-inline-block float-right">ATOMBITS</span>
-    </footer>
 </div>
 <!-- end page content -->

@@ -13,18 +13,43 @@ export class ListComponent {
 
   constructor(private aer0220: Aer0220ApiService, private router: Router) {
 
+    // this.getPaymentStatus();
+
     this.aer0220.getStudents()
     .then ( ( data: any ) => {
-      console.log(data);
       this.studentsList = data;
+    });
+
+    const conditionStatus = true;
+  }
+
+  public conditionStatus = false;
+
+  getPaymentStatus() {
+
+
+  }
+
+
+  payment( studentId: any ) {
+
+    console.log(studentId);
+
+    // paid
+    this.aer0220.putPayment(studentId).then ( ( data: any ) => {
+
+    }, (err) => {
+      console.log(err);
+
     });
 
   }
 
+
   // Send ID
   profileStudent( student: any ) {
 
-    let studentId;
+    let studentId: any;
 
     studentId = student.student_id;
 

@@ -16,6 +16,12 @@ export class HomeComponent {
   getAmountCourses: any[] = [];
   getAverageCourses: any[] = [];
   getLastRegistration: any[] = [];
+  getStatusCourses: any[] = [];
+
+  getStudentsNew: number ;
+  getStudentsRecurrent: any[] = [];
+  studentsRecurrent: number;
+
 
   constructor(private aer0220: Aer0220ApiService) {
 
@@ -29,8 +35,13 @@ export class HomeComponent {
     this.getAmountCoursesService(courses);
     this.getAverageCoursesService(courses);
     this.getLastRegistrationService(courses);
+    this.getStudentsNewService(courses);
+
+    this.getStatus(courses);
 
   }
+
+  public conditionStatus = false;
 
   getCoursesService() { // List of courses
 
@@ -56,6 +67,14 @@ export class HomeComponent {
 
   }
 
+  private getStudentsNewService(id: any) { // Sum new students
+
+    this.aer0220.getStudentsCourses(id).then ( ( data: any ) => {
+      this.getStudentsNew = data;
+    });
+
+}
+
   private getStudentsCoursesService(id: any) { // Total students per course
 
     const totalCourses = 7;
@@ -67,6 +86,9 @@ export class HomeComponent {
       });
     }
 
+    // Sum students to the courses > 1
+    this.studentsRecurrent = this.getStudentsCourses.reduce((a, b) => a + b, 0);
+    this.studentsRecurrent = this.studentsRecurrent - this.getStudentsCourses[0]; // subtract course 1
   }
 
   private getAmountCoursesService(id: any) { // Total amount per course
@@ -111,5 +133,37 @@ export class HomeComponent {
 
   }
 
-}
+  getStatus(id: any) { // Status of courses
 
+    const totalCourses = 7;
+    let status: string;
+    if ( id < totalCourses ) {
+
+      this.aer0220.getStudentsCourses(id).then ( ( data: any ) => {
+        this.conditionStatus = true;
+
+        // change to switch
+        if ( data >= 30) {
+          status = 'superado';
+          this.conditionStatus = false;
+        }
+        if ( data >= 24 && data < 30) {
+          status = 'aceptado';
+          this.conditionStatus = true;
+        } else {
+          status = 'rezagado';
+          this.conditionStatus = true;
+        }
+
+        this.getStatusCourses.push(status);
+
+        this.getStatus(id + 1);
+
+      });
+    }
+
+
+  }
+
+
+}
