@@ -161,7 +161,7 @@
                                         <td>{{ getAverageCourses[i]}} AÑOS</td>
                                         <td>${{ getAmountCourses[i] }}</td>
                                         <td>
-                                            <span *ngIf="conditionStatus" [className]="myClass ? 'badge badge-boxed  badge-soft-success': 'badge badge-boxed  badge-soft-warning' ">
+                                            <span [className]="conditionStatus ? 'badge badge-boxed  badge-soft-warning': 'badge badge-boxed  badge-soft-success' ">
                                                 {{ getStatusCourses[i] }}
                                             </span>
                                         </td>

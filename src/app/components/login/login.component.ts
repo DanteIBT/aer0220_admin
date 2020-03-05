@@ -11,15 +11,17 @@ export class LoginComponent {
 
   public user: any = {
       email: '',
-      password: ''
+      password: '',
   };
 
-  constructor(private aer0220: Aer0220ApiService, private router: Router) { }
+  public rememberLogin: false;
+
+  constructor(private aer0220: Aer0220ApiService, private router: Router) { console.log(this.rememberLogin); }
 
 
   public onLogin() {
 
-    this.aer0220.getLogin(this.user.email, this.user.password)
+    this.aer0220.getLogin(this.user.email, this.user.password, this.rememberLogin)
     .then ( ( data: any ) => {
       this.router.navigateByUrl('/home');
     }, (err) => {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 import { map } from 'rxjs/operators';
 
@@ -10,6 +11,7 @@ export class Aer0220ApiService {
 
   userToken: string;
   userName: string;
+  rememberLogin: string;
 
   constructor(private http: HttpClient) {
     this.reedToken();
@@ -22,14 +24,14 @@ export class Aer0220ApiService {
   });
 
   getQuery( query: string) {
-    const url = `http://localhost/aer0220_api/${ query }`;
+    const url = `${environment.apiUrl}/${ query }`;
 
     return this.http.get( url, { headers: this.headers } ).toPromise();
 
   }
 
   putQuery( query: string) {
-    const url = `http://localhost/aer0220_api/${ query }`;
+    const url = `${environment.apiUrl}/${ query }`;
 
     return this.http.put( url, {withCredentials: true}, { headers: this.headers } ).toPromise();
 
@@ -74,15 +76,21 @@ export class Aer0220ApiService {
 
   }
 
-  getLastRegistration( id: any ) {// Las Registration
+  getLastRegistration( id: any ) {// Last Registration
 
     return this.getQuery(`students/registration/${ id }`);
 
   }
 
+  getPayments() {// All payments
+
+    return this.getQuery(`payments/`);
+
+  }
+
   getCourses() { // List of courses
 
-    return this.http.get('http://localhost/aer0220_api/catalogues/courses').toPromise();
+    return this.http.get(`${environment.apiUrl}/catalogues/courses`).toPromise();
 
   }
 
@@ -94,16 +102,37 @@ export class Aer0220ApiService {
 
   }
 
-  getLogin(email: string, password: string) {
+  getLogin(email: string, password: string, rememberLogin: boolean) {
 
-    return this.http.post('http://localhost/aer0220_api/sign-in', { email, password })
+    this.saveRememberLogin(rememberLogin);
+
+    if (rememberLogin === true ) {
+
+    }
+
+    return this.http.post(`${environment.apiUrl}/sign-in`, { email, password })
       .pipe( map( data => {
         this.saveToken(data['access_token']);
-        this.saveUserName(data.user.name);
+        this.saveUserName(data['user']['name']);
 
         return data;
       })
     ).toPromise();
+
+  }
+
+  private saveRememberLogin( saveRememberLogin: boolean ) {
+
+    switch(saveRememberLogin){
+      case true:
+     this.rememberLogin = 'true';
+     break;
+      default:
+      this.rememberLogin = 'false';
+  }
+
+    // saveRememberLogin;
+    localStorage.setItem('saveRememberLogin', this.rememberLogin);
 
   }
 
@@ -155,6 +184,7 @@ export class Aer0220ApiService {
 
     localStorage.removeItem('token');
     localStorage.removeItem('name');
+    localStorage.removeItem('saveRememberLogin');
 
   }
 

@@ -10,33 +10,28 @@ import { Router } from '@angular/router';
 export class ListComponent {
 
   studentsList: any[] = [];
+  getStatusCourses: any[] = [];
 
   constructor(private aer0220: Aer0220ApiService, private router: Router) {
 
-    // this.getPaymentStatus();
+    this.getStudents();
 
+  }
+
+  getStudents() {
     this.aer0220.getStudents()
     .then ( ( data: any ) => {
       this.studentsList = data;
     });
-
-    const conditionStatus = true;
-  }
-
-  public conditionStatus = false;
-
-  getPaymentStatus() {
-
-
   }
 
 
-  payment( studentId: any ) {
-
-    console.log(studentId);
+  payment( studentId: any, index: number ) {
 
     // paid
     this.aer0220.putPayment(studentId).then ( ( data: any ) => {
+
+      this.studentsList[index].payment_status = 'Pagado';
 
     }, (err) => {
       console.log(err);
