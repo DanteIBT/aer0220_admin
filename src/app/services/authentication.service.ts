@@ -50,7 +50,7 @@ export class AuthenticationService {
 
   }
 
-  private setHeaders(token) {
+  private setHeaders(token: any) {
 
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',

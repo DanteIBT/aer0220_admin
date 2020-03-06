@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { Aer0220ApiService } from '../services/aer0220-api.service';
 import { AuthenticationService } from '../services/authentication.service';
 
 
@@ -9,7 +8,7 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private aer0220: Aer0220ApiService, private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   canActivate(): boolean {
     if (this.authenticationService.isLogIn()) {

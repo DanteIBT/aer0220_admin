@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'aer0220-admin';
+  title = 'AEROBOT';
 
   constructor() {}
 
