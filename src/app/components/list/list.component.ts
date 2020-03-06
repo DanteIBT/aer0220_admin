@@ -1,37 +1,36 @@
-import { Component } from '@angular/core';
-import { Aer0220ApiService } from '../../services/aer0220-api.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { StudentService } from '../../services/student.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styles: []
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
 
   studentsList: any[] = [];
-  getStatusCourses: any[] = [];
 
-  constructor(private aer0220: Aer0220ApiService, private router: Router) {
+  constructor(private studentService: StudentService , private router: Router) { }
 
-    this.getStudents();
-
+  ngOnInit() {
+    this.studentList();
   }
 
-  getStudents() {
-    this.aer0220.getStudents()
+  private studentList() {
+    this.studentService.studentList()
     .then ( ( data: any ) => {
       this.studentsList = data;
     });
   }
 
+  public makePayment( studentId: any, index: number ) {
 
-  payment( studentId: any, index: number ) {
+    // Make the payment
+    this.studentService.makePayment(studentId).then ( ( data: any ) => {
 
-    // paid
-    this.aer0220.putPayment(studentId).then ( ( data: any ) => {
-
-      this.studentsList[index].payment_status = 'Pagado';
+      this.studentsList[index].status_name = 'Pagado';
+                            // payment_status
 
     }, (err) => {
       console.log(err);
@@ -40,9 +39,8 @@ export class ListComponent {
 
   }
 
-
   // Send ID
-  profileStudent( student: any ) {
+  public profileStudent( student: any ) {
 
     let studentId: any;
 

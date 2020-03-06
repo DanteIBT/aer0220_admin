@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Aer0220ApiService } from '../../services/aer0220-api.service';
 import { ActivatedRoute } from '@angular/router';
+import { StudentService } from '../../services/student.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,19 +11,19 @@ export class ProfileComponent {
 
   profile: any = {};
 
-  constructor(private aer0220: Aer0220ApiService, private router: ActivatedRoute) {
+  constructor(private studentService: StudentService, private router: ActivatedRoute) {
 
     this.router.params.subscribe( params => {
 
-      this.getStudent( params ['id'] );
+      this.studentProfile( params ['id'] );
 
     });
 
   }
 
-  getStudent( id: string ){
+  studentProfile( id: string ) {
 
-    this.aer0220.getStudent( id )
+    this.studentService.studentProfile( id )
     .then ( data => {
       this.profile = data;
     });

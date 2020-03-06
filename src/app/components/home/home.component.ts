@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Aer0220ApiService } from '../../services/aer0220-api.service';
+import { Component, OnInit } from '@angular/core';
+import { StudentService } from '../../services/student.service';
+import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-home',
@@ -7,139 +8,138 @@ import { Aer0220ApiService } from '../../services/aer0220-api.service';
   styles: []
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  getCourses: any[] = [];
-  getCount: any[] = [];
-  getTotalAmount: any[] = [];
-  getStudentsCourses: any[] = [];
-  getAmountCourses: any[] = [];
-  getAverageCourses: any[] = [];
-  getLastRegistration: any[] = [];
-  getStatusCourses: any[] = [];
+  listOfCourses: any[] = [];
+  totalStudentsCourses: any[] = [];
+  totalAmountCourses: any[] = [];
+  averageCourses: any[] = [];
+  lastDateRegistration: any[] = [];
+  listStatusCourses: any[] = [];
 
-  getStudentsNew: number ;
-  getStudentsRecurrent: any[] = [];
-  studentsRecurrent: number;
+  totalNewStudents: number = 0 ;
+  studentsRecurrent: number = 0;
+  totalStudents: number = 0;
+  totalAmount: number = 0;
+  totalCourses: number = 7;
 
+  public conditionStatus: boolean = false;
 
-  constructor(private aer0220: Aer0220ApiService) {
+  constructor(private studentService: StudentService, private courseService: CourseService) {
+
+  }
+
+  ngOnInit() {
 
     const courses = 1;
 
-    this.getCoursesService();
-    this.getCountService();
-    this.getTotalAmountService();
+    this.listCourses();
+    this.studentsCount();
+    this.amountCount();
+    this.newStudentsCount(courses);
+
     // Recursive functions
-    this.getStudentsCoursesService(courses);
-    this.getAmountCoursesService(courses);
-    this.getAverageCoursesService(courses);
-    this.getLastRegistrationService(courses);
-    this.getStudentsNewService(courses);
-
-    this.getStatus(courses);
+    this.studentsCoursesCount(courses);
+    this.amountCoursesCount(courses);
+    this.averageAgeCourses(courses);
+    this.lastRegistration(courses);
+    this.statusCourses(courses);
 
   }
 
-  public conditionStatus = false;
 
-  getCoursesService() { // List of courses
+  private listCourses() { // List of courses
 
-    this.aer0220.getCourses().then ( ( data: any ) => {
-      this.getCourses = data;
+    this.courseService.listCourses().then ( ( data: any ) => {
+      this.listOfCourses = data;
     });
 
   }
 
-  getCountService() { // Total sstudents
+  private studentsCount() { // Total students
+    this.studentService.totalStudents().then ( ( data: number ) => {
+      this.totalStudents = data;
 
-    this.aer0220.getCount().then ( ( data: any ) => {
-      this.getCount = data;
     });
 
   }
 
-  getTotalAmountService() { // Total amount
+  private amountCount() { // Total amount
 
-    this.aer0220.getTotalAmount().then ( ( data: any ) => {
-      this.getTotalAmount = data;
+    this.courseService.totalAmount().then ( ( data: number ) => {
+      this.totalAmount = data;
     });
 
   }
 
-  private getStudentsNewService(id: any) { // Sum new students
-
-    this.aer0220.getStudentsCourses(id).then ( ( data: any ) => {
-      this.getStudentsNew = data;
+  private newStudentsCount(id: any) { // Sum new students
+    // Only course 1
+    this.courseService.totalStudentsCourses(id).then ( ( data: any ) => {
+      this.totalNewStudents = data;
     });
 
 }
 
-  private getStudentsCoursesService(id: any) { // Total students per course
+  private studentsCoursesCount(id: any) { // Total students per course
 
-    const totalCourses = 7;
-    if ( id < totalCourses ) {
+    if ( id < this.totalCourses ) {
 
-      this.aer0220.getStudentsCourses(id).then ( ( data: any ) => {
-        this.getStudentsCourses.push(data);
-        this.getStudentsCoursesService(id + 1);
+      this.courseService.totalStudentsCourses(id).then ( ( data: any ) => {
+        this.totalStudentsCourses.push(data);
+        this.studentsCoursesCount(id + 1);
       });
     }
 
-    // Sum students to the courses > 1
-    this.studentsRecurrent = this.getStudentsCourses.reduce((a, b) => a + b, 0);
-    this.studentsRecurrent = this.studentsRecurrent - this.getStudentsCourses[0]; // subtract course 1
+    // Sum students to the courses > lvl 1
+    this.studentsRecurrent = this.totalStudentsCourses.reduce((a, b) => a + b, 0);
+    this.studentsRecurrent = this.studentsRecurrent - this.totalStudentsCourses[0]; // subtract course 1
   }
 
-  private getAmountCoursesService(id: any) { // Total amount per course
+  private amountCoursesCount(id: any) { // Total amount per course
 
-    const totalCourses = 7;
-    if ( id < totalCourses ) {
+    if ( id < this.totalCourses ) {
 
-      this.aer0220.getAmountCourses(id).then ( ( data: any ) => {
-        this.getAmountCourses.push(data);
-        this.getAmountCoursesService(id + 1);
+      this.courseService.totalAmountCourses(id).then ( ( data: any ) => {
+        this.totalAmountCourses.push(data);
+        this.amountCoursesCount(id + 1);
       });
 
     }
 
   }
 
-  private getAverageCoursesService(id: any) { // Average of age per course
+  private averageAgeCourses(id: any) { // Average of age per course
 
-    const totalCourses = 7;
-    if ( id < totalCourses ) {
+    if ( id < this.totalCourses ) {
 
-      this.aer0220.getAverageCourses(id).then ( ( data: any ) => {
-        this.getAverageCourses.push(data);
-        this.getAverageCoursesService(id + 1);
+      this.courseService.averageCourses(id).then ( ( data: any ) => {
+        this.averageCourses.push(data);
+        this.averageAgeCourses(id + 1);
       });
 
     }
 
   }
 
-  private getLastRegistrationService(id: any) { // Date of last registration
+  private lastRegistration(id: any) { // Date of last registration
 
-    const totalCourses = 7;
-    if ( id < totalCourses ) {
+    if ( id < this.totalCourses ) {
 
-      this.aer0220.getLastRegistration(id).then ( ( data: any ) => {
-        this.getLastRegistration.push(data);
-        this.getLastRegistrationService(id + 1);
+      this.courseService.lastDateRegistration(id).then ( ( data: any ) => {
+        this.lastDateRegistration.push(data);
+        this.lastRegistration(id + 1);
       });
 
     }
 
   }
 
-  getStatus(id: any) { // Status of courses
+  private statusCourses(id: any) { // Status of courses
 
-    const totalCourses = 7;
     let status: string;
-    if ( id < totalCourses ) {
+    if ( id < this.totalCourses ) {
 
-      this.aer0220.getStudentsCourses(id).then ( ( data: any ) => {
+      this.courseService.totalStudentsCourses(id).then ( ( data: any ) => {
         this.conditionStatus = true;
 
         // change to switch
@@ -155,9 +155,9 @@ export class HomeComponent {
           this.conditionStatus = true;
         }
 
-        this.getStatusCourses.push(status);
+        this.listStatusCourses.push(status);
 
-        this.getStatus(id + 1);
+        this.statusCourses(id + 1);
 
       });
     }

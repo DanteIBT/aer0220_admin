@@ -9,19 +9,35 @@ import { map } from 'rxjs/operators';
 })
 export class Aer0220ApiService {
 
-  userToken: string;
-  userName: string;
-  rememberLogin: string;
+  userToken: string = '';
+  userName: string = '';
+  userEmail: string = '';
+
+  headers: HttpHeaders;
 
   constructor(private http: HttpClient) {
     this.reedToken();
     this.reedUserName();
+    this.reedUserEmail();
+
+    // const token = localStorage.getItem('token');
+
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token')
+    });
+
   }
 
-  headers: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: localStorage.getItem('token')
-  });
+  public setHeaders(token) {
+
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token
+    });
+
+  }
+
 
   getQuery( query: string) {
     const url = `${environment.apiUrl}/${ query }`;
@@ -49,34 +65,35 @@ export class Aer0220ApiService {
 
   }
 
-  getCount() {// Total students enrolled
+  totalStudents() {// Total students enrolled
 
-    return this.getQuery(`students/count/`);
+    const url = `${environment.apiUrl}/students/count/`;
+    return this.http.get( url, { headers: this.headers } ).toPromise();
 
   }
 
-  getStudentsCourses( id: any ) {// Total students in course
+  totalStudentsCourses( id: any ) {// Total students in course
 
     return this.getQuery(`students/courses/${ id }`);
 
   }
-  getTotalAmount() {// Total amount
+  totalAmount() {// Total amount
 
     return this.getQuery(`payments/amount/`);
 
   }
-  getAmountCourses( id: any ) {// Total amount per course
+  totalAmountCourses( id: any ) {// Total amount per course
 
     return this.getQuery(`students/amount/${ id }`);
 
   }
-  getAverageCourses( id: any ) {// Average of age
+  averageCourses( id: any ) {// Average of age
 
     return this.getQuery(`students/age/${ id }`);
 
   }
 
-  getLastRegistration( id: any ) {// Last Registration
+  lastDateRegistration( id: any ) {// Last Registration
 
     return this.getQuery(`students/registration/${ id }`);
 
@@ -88,7 +105,7 @@ export class Aer0220ApiService {
 
   }
 
-  getCourses() { // List of courses
+  listCourses() { // List of courses
 
     return this.http.get(`${environment.apiUrl}/catalogues/courses`).toPromise();
 
@@ -102,44 +119,17 @@ export class Aer0220ApiService {
 
   }
 
-  getLogin(email: string, password: string, rememberLogin: boolean) {
-
-    this.saveRememberLogin(rememberLogin);
-
-    if (rememberLogin === true ) {
-
-    }
+  getLogin(email: string, password: string) {
 
     return this.http.post(`${environment.apiUrl}/sign-in`, { email, password })
       .pipe( map( data => {
         this.saveToken(data['access_token']);
+        this.setHeaders(data['access_token']);
         this.saveUserName(data['user']['name']);
 
         return data;
       })
     ).toPromise();
-
-  }
-
-  private saveRememberLogin( saveRememberLogin: boolean ) {
-
-    switch(saveRememberLogin){
-      case true:
-     this.rememberLogin = 'true';
-     break;
-      default:
-      this.rememberLogin = 'false';
-  }
-
-    // saveRememberLogin;
-    localStorage.setItem('saveRememberLogin', this.rememberLogin);
-
-  }
-
-  private saveUserName( userName: string ) {
-
-    this.userName = userName;
-    localStorage.setItem('name', userName);
 
   }
 
@@ -153,6 +143,13 @@ export class Aer0220ApiService {
     today.setSeconds(1296000); // 15 days
 
     localStorage.setItem('expires', today.getTime().toString() );
+
+  }
+
+  private saveUserName( userName: string ) {
+
+    this.userName = userName;
+    localStorage.setItem('name', userName);
 
   }
 
@@ -176,7 +173,19 @@ export class Aer0220ApiService {
       this.userName = '';
     }
 
-    return this.userToken;
+    return this.userName;
+
+  }
+
+  reedUserEmail() {
+
+    if (localStorage.getItem('email')) {
+      this.userEmail = localStorage.getItem('email');
+    } else {
+      this.userEmail = '';
+    }
+
+    return this.userEmail;
 
   }
 
@@ -184,13 +193,12 @@ export class Aer0220ApiService {
 
     localStorage.removeItem('token');
     localStorage.removeItem('name');
-    localStorage.removeItem('saveRememberLogin');
 
   }
 
   isLogIn(): boolean { // Check the session
 
-    if (this.userToken.length < 2) {
+    if (this.userToken === '') {
       return false;
     }
 

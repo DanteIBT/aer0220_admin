@@ -9,7 +9,7 @@
                             <div class="col-8 align-self-center">
                                 <div class="">
                                     <h4 class="mt-0 header-title">TOTAL INSCRITOS</h4>
-                                    <h2 class="mt-0 font-weight-bold text-dark">{{getCount}}</h2>
+                                    <h2 class="mt-0 font-weight-bold text-dark">{{totalStudents}}</h2>
                                     <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO ANTERIOR</p>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                             <div class="col-8 align-self-center">
                                 <div class="">
                                     <h4 class="mt-0 header-title">TOTAL INSCRIPCIONES</h4>
-                                    <h2 class="mt-0 font-weight-bold text-dark">$ {{getTotalAmount}}</h2>
+                                    <h2 class="mt-0 font-weight-bold text-dark">$ {{totalAmount}}</h2>
                                     <p class="mb-0 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO ANTERIOR</p>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                                                 <div class="icon-info my-3">
                                                     <i class="dripicons-user bg-soft-pink"></i>
                                                 </div>
-                                                <h2 class="mt-0 font-weight-bold text-dark">{{getStudentsNew}}</h2>
+                                                <h2 class="mt-0 font-weight-bold text-dark">{{totalNewStudents}}</h2>
                                                 <p class="mb-1 text-muted"><span class="text-success"><i class="mdi mdi-arrow-up"></i>8.8%</span> VS AÑO PASADO</p>
                                             </div>
                                         </div>
@@ -152,17 +152,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let course of getCourses;let i = index">
+                                    <tr *ngFor="let course of listOfCourses;let i = index">
                                         <td>
                                             <img class="" src="assets/images/products/img-1.png" alt="user"> </td>
-                                        <td>{{ i+1 }} - {{ course.level }}</td>
-                                        <td>{{ getStudentsCourses[i]}}</td>
-                                        <td>{{ getLastRegistration[i]?.updated_at }}</td>
-                                        <td>{{ getAverageCourses[i]}} AÑOS</td>
-                                        <td>${{ getAmountCourses[i] }}</td>
+                                        <td>{{ course.level }}</td>
+                                        <td>{{ totalStudentsCourses[i]}}</td>
+                                        <td>{{ lastDateRegistration[i]?.updated_at }}</td>
+                                        <td>{{ averageCourses[i]}} AÑOS</td>
+                                        <td>${{ totalAmountCourses[i] }}</td>
                                         <td>
                                             <span [className]="conditionStatus ? 'badge badge-boxed  badge-soft-warning': 'badge badge-boxed  badge-soft-success' ">
-                                                {{ getStatusCourses[i] }}
+                                                {{ listStatusCourses[i] }}
                                             </span>
                                         </td>
                                     </tr>

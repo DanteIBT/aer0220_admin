@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Aer0220ApiService } from 'src/app/services/aer0220-api.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 
-  constructor(private aer0220: Aer0220ApiService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   exit() {
 
-    this.aer0220.logOut();
+    this.authenticationService.logOut();
     this.router.navigateByUrl('/login');
 
   }

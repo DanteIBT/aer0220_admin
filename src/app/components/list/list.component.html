@@ -32,10 +32,12 @@
                                         <td> {{student.name_paternal}} </td>
                                         <td> {{student.name_maternal}} </td>
                                         <td> {{student.birth_date}} AÑOS</td>
-                                        <td> {{student.courses}} </td>
+                                        <td> {{student.student_courses?.level}} </td>
+                                        <!--<td> {{student.courses}} </td>-->
                                         <td>
-                                            <button class="btn btn-info px-4 align-self-center report-btn" (click)="payment( student.student_id, index )" [disabled]="student.payment_status == 'Pagado'">
-                                                {{student.payment_status}}
+                                            <button class="btn btn-info px-4 align-self-center report-btn" (click)="makePayment( student.student_id, index )" [disabled]="student.status_name == 'Pagado'">
+                                                <!--{{student.payment_status}}-->
+                                                {{ student.status_name }}
                                             </button>
                                         </td>
                                         <td>
